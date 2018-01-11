@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doje.dao.DojeDao">
+	<select id="checkId" resultType="int" parameterType="String">
+		select
+		count(id)
+		from user
+		where id = #{id}
+	</select>
+	<insert id="insertUser" parameterType="com.doje.vo.UserVo">
+		insert into user
+		values(
+		#{id},
+		#{pw},
+		#{name},
+		#{gender},
+		#{hobby},
+		#{sns}
+		)
+	</insert>
+
+	<update id="updateUser" parameterType="com.doje.vo.UserVo">
+		update user set
+		pw = #{pw},
+		name = #{name},
+		gender = #{gender},
+		hobby = #{hobby},
+		sns = #{sns}
+		where
+		id = #{id}
+	</update>
+
+	<select id="selectUser" parameterType="String" resultType="com.doje.vo.UserVo">
+		select * from user where id = #{id}
+	</select>
+
+	<select id="selectBoard" parameterType="String" resultType="com.doje.vo.BoardVo">
+		select * from board where no = #{no}
+	</select>
+
+	<insert id="insertBoard" parameterType="com.doje.vo.BoardVo"
+		useGeneratedKeys="true" keyProperty="no">
+		insert into board
+		(writer,title,content,date,type) values (
+		#{writer},
+		#{title},
+		#{content},
+		now(),
+		#{type}
+		)
+	</insert>
+
+	<update id="updateBoard" parameterType="com.doje.vo.BoardVo">
+		update board set
+		title =
+		#{title},
+		content = #{content}
+		where no = #{no}
+	</update>
+
+	<insert id="insertFreeBoard" parameterType="com.doje.vo.FreeBoardVo"
+		useGeneratedKeys="true" keyProperty="no">
+		insert into free_board
+		(board_pk,open)
+		values (
+		#{board_pk},
+		#{open}
+		)
+	</insert>
+
+	<select id="selectFreeBoard" parameterType="String"
+		resultType="com.doje.vo.FreeBoardVo">
+		select * from free_board where board_pk = #{board_pk}
+	</select>
+
+	<update id="updateFreeBoard" parameterType="com.doje.vo.FreeBoardVo">
+		update free_board set
+		open = #{open}
+		where board_pk = #{board_pk}
+	</update>
+
+	<insert id="insertGuestBoard" parameterType="com.doje.vo.GuestBoardVo"
+		useGeneratedKeys="true" keyProperty="no">
+		insert into guest_board
+		(board_pk)
+		values (
+		#{board_pk}
+		)
+	</insert>
+
+	<select id="selectGuestBoard" parameterType="String"
+		resultType="com.doje.vo.GuestBoardVo">
+		select * from guest_board where board_pk = #{board_pk}
+	</select>
+
+	<select id="selectImageBoard" parameterType="String"
+		resultType="com.doje.vo.ImageBoardVo">
+		select * from image_board where board_pk = #{board_pk}
+	</select>
+
+	<insert id="insertImageBoard" parameterType="com.doje.vo.ImageBoardVo"
+		useGeneratedKeys="true" keyProperty="no">
+		insert into image_board
+		(board_pk,total)
+		values (
+		#{board_pk},
+		#{total}
+		)
+	</insert>
+
+	<update id="updateImageBoard" parameterType="com.doje.vo.ImageBoardVo">
+		update image_board
+		set
+		total =
+		#{total}
+		where board_pk = #{board_pk}
+	</update>
+
+	<select id="selectImageList" parameterType="String"
+		resultType="com.doje.vo.ImageListVo">
+		select *
+		from image_list
+		where image_pk = #{image_pk}
+	</select>
+
+	<insert id="insertImageList" parameterType="com.doje.vo.ImageListVo"
+		useGeneratedKeys="true" keyProperty="no">
+		insert into
+		image_list(image_pk,url,origin_name,server_name)
+		values (
+		#{image_pk},
+		#{url},
+		#{origin_name},
+		#{server_name}
+		)
+	</insert>
+
+	<update id="updateImageList" parameterType="com.doje.vo.ImageListVo">
+	update image_list set
+	origin_name = #{origin_name}
+	where no = #{no}
+	</update>
+
+	<select id="selectNoticeBoard" parameterType="String"
+		resultType="com.doje.vo.NoticeBoardVo">
+		select * from notice_board where board_pk = #{board_pk}
+	</select>
+
+	<insert id="insertNoticeBoard" parameterType="com.doje.vo.NoticeBoardVo"
+		useGeneratedKeys="true" keyProperty="no">
+		insert into
+		notice_board(board_pk,edit_date,edit_id)
+		values (
+		#{board_pk},
+		now(),
+		#{edit_id}
+		)
+	</insert>
+
+	<update id="updateNoticeBoard" parameterType="com.doje.vo.NoticeBoardVo">
+		update notice_board
+		set
+		edit_date = now(),
+		edit_id = #{edit_id}
+	</update>
+	<delete id="deleteImageList" parameterType="String">
+		delete from image_list where no = #{no}
+	</delete>
+</mapper>
